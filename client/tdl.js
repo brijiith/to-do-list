@@ -1,23 +1,4 @@
-<!DOCTYPE html>
-<html> 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="header">
-        <h2 style="margin:5px">To Do</h2>
-        <input type="text" id="myInput" placeholder="Type here">
-        <span onclick="newElement()" class="addBtn">Add</span>
-      </div>
-      <ul id="myUL">
-      </ul>
-     
-  <script>
-          var myNodelist = document.getElementsByTagName("LI");
+var myNodelist = document.getElementsByTagName("LI");
 var i;
 for (i = 0; i < myNodelist.length; i++) {
   var span = document.createElement("SPAN");
@@ -26,7 +7,7 @@ for (i = 0; i < myNodelist.length; i++) {
   span.appendChild(txt);
   myNodelist[i].appendChild(span);
 }
-// Click on a close button to hide the current list item
+// close button
 var close = document.getElementsByClassName("close");
 var i;
 for (i = 0; i < close.length; i++) {
@@ -35,19 +16,26 @@ for (i = 0; i < close.length; i++) {
   div.style.display = "none";
   }
 }
-// Add a "checked" symbol when clicking on a list item
+// checked
 var list = document.querySelector('ul');
 list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
   ev.target.classList.toggle('checked');
   }
 }, false);
-// Create a new list item when clicking on the "Add" button
+// add
 function newElement() {
   var li = document.createElement("li");
   var inputValue = document.getElementById("myInput").value;
   var t = document.createTextNode(inputValue);
-  li.appendChild(t);
+  console.log(
+      'In here'
+  );
+  fetch('http://localhost:3000/',{method:"POST",
+  body:JSON.stringify(inputValue) 
+ 
+}).then(response =>  response.json()).then(data => console.log(data))
+  li.appendChild(t);    
   if (inputValue === '') {
   alert("You must write something!");
   } else {
@@ -66,7 +54,3 @@ function newElement() {
     }
   }
 }
-
-      </script>
-</body>
-</html>
