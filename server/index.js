@@ -19,6 +19,19 @@ const server= http.createServer(function(req,res){
     console.log('request was made:'+ req.url)
     if(req.url === '/home' || req.url === '/'){
         console.log(req.body);
+
+        var body = ''
+        req.on('data', function(data) {
+          body += data
+          console.log('Partial body: ' + body)
+        })
+        req.on('end', function() {
+          console.log('Body: ' + body)
+          res.writeHead(200, {'Content-Type': 'text/html'})
+          res.end('post received')
+        })
+
+
         res.writeHead(200, headers)
         res.write(`{"text": "Hello world!!!"}`)
         res.end()

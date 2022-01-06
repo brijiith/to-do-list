@@ -29,7 +29,7 @@ function newElement() {
   var inputValue = document.getElementById("myInput").value;
   var t = document.createTextNode(inputValue);
   console.log(
-      'In here'
+      'Hello World'
   );
   fetch('http://localhost:3000/',{method:"POST",
   body:JSON.stringify(inputValue) 
