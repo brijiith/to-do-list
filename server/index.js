@@ -25,7 +25,7 @@ const server= http.createServer(function(req,res){
           body += data
           console.log('Partial body: ' + body)
 
-          fs.appendFile('returnValue.txt', body, function (err) {
+          fs.appendFile('returnValue.txt', '\n' + body, function (err) {
             if (err) throw err;
             console.log('Saved!');
           });
@@ -40,14 +40,22 @@ const server= http.createServer(function(req,res){
 
 
         res.writeHead(200, headers)
-        res.write(`{"text": "Hello world!!!"}`)
+         res.write(`{"text": "Hello world!!!"}`)
         res.end()
     }
-    else  if(req.url === '/about'){
+    else  if(req.url === '/list'){
+
         res.writeHead(200, headers)
-        res.write(`{"text": "About world"}`)
-        // res.headersSent({})
+        fs.readFile('returnValue.txt', (err, data) => {
+          if (err) throw err;
+        
+          console.log(data.toJSON());
+          res.write(data)
         res.end()
+      })
+      
+        
+        // res.headersSent({})
     }
    
 })
