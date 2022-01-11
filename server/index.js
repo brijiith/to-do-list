@@ -1,4 +1,4 @@
-const { fstat } = require('fs');
+const fs = require('fs');
 const http=require('http')
 const port=3000
 const server= http.createServer(function(req,res){
@@ -9,7 +9,7 @@ const server= http.createServer(function(req,res){
         'Access-Control-Max-Age': 2592000, // 30 days
         /** add other headers as per requirement */
       };
-    
+     
       if (req.method === 'OPTIONS') {
         res.writeHead(204, headers);
         res.end();
@@ -24,11 +24,18 @@ const server= http.createServer(function(req,res){
         req.on('data', function(data) {
           body += data
           console.log('Partial body: ' + body)
+
+          fs.appendFile('returnValue.txt', body, function (err) {
+            if (err) throw err;
+            console.log('Saved!');
+          });
+          
         })
         req.on('end', function() {
           console.log('Body: ' + body)
-          res.writeHead(200, {'Content-Type': 'text/html'})
-          res.end('post received')
+          const data = JSON.parse(body);
+        //   res.writeHead(200, {'Content-Type': 'text/html'})
+        //   res.end('post received')
         })
 
 
@@ -42,7 +49,7 @@ const server= http.createServer(function(req,res){
         // res.headersSent({})
         res.end()
     }
-
+   
 })
 server.listen(port,function(error) {
     if (error){
