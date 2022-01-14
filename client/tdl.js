@@ -1,5 +1,25 @@
+window.onload = () => {
+  fetch('http://localhost:3000/list',{method:"GET",
+}).then(response =>  response.json())
+.then(data => {
+ 
+  console.log(data);
+  const myNodelist = document.getElementById("myUL");
+
+  for (let i = 0; i < data.length; i++) {
+    const li = document.createElement('li')
+    li.innerText = data[i].text;
+    myNodelist.appendChild(li);
+  }
+
+})
+  // response.json()).then(data => console.log(data))
+  
+
+}
 var myNodelist = document.getElementsByTagName("LI");
 var i;
+
 for (i = 0; i < myNodelist.length; i++) {
   var span = document.createElement("SPAN");
   var txt = document.createTextNode("\u00D7");
@@ -7,6 +27,7 @@ for (i = 0; i < myNodelist.length; i++) {
   span.appendChild(txt);
   myNodelist[i].appendChild(span);
 }
+
 // close button
 let closeArr = document.getElementsByClassName("close");
 var i;
@@ -23,6 +44,7 @@ list.addEventListener('click', function(ev) {
   if (ev.target.tagName === 'LI') {
   ev.target.classList.toggle('checked');
    []
+   
   }
 },  false);
 // add
@@ -49,6 +71,9 @@ list.addEventListener('click', function(ev) {
   fetch('http://localhost:3000/',{method:"POST",
   body:JSON.stringify({text: inputValue, status: true}) 
 }).then(response =>  response.json()).then(data => console.log(data))
+ 
+
+
  
   li.appendChild(t);
   const checkbox = document.createElement('input');
